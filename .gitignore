@@ -10,6 +10,9 @@
 /node_modules
 npm-debug.log
 yarn-error.log
+# Ignore nested node_modules folders
+node_modules/
+**/node_modules/
 
 # IDEs and editors
 .idea/
