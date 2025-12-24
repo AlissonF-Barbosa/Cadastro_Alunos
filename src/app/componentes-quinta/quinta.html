@@ -1,0 +1,175 @@
+<!-- Etapa 46-47: Fieldset com legend "Cadastro" e form-container -->
+<fieldset class="form-fieldset">
+  <legend>{{ contatoEditando ? 'Editar Cadastro' : 'Novo Cadastro' }}</legend>
+  
+  <div class="form-container">
+    <!-- Etapa 48: form-row-2 (Nome + Email) -->
+    <div class="form-row-2">
+      <!-- Etapa 49: Input Nome com [(ngModel)] -->
+      <input 
+        type="text"
+        [(ngModel)]="nome"
+        placeholder="Nome"
+        class="nome-input"
+      >
+      
+      <!-- Etapa 50: Input Email com #emailInput, autocomplete="off" -->
+      <div class="email-field">
+        <input
+          #emailInput
+          type="email"
+          name="noemail"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+          [(ngModel)]="email"
+          placeholder="E-mail"
+          class="email-input"
+        />
+      </div>
+    </div>
+  
+    <!-- Etapa 51: form-row-4 (Telefone + Celular + CPF + Data Nascimento) -->
+    <div class="form-row-4">
+      <!-- Etapa 52: Input Telefone com #telefoneInput -->
+      <div class="telefone-field">
+        <input
+          #telefoneInput
+          type="text"
+          [(ngModel)]="telefone"
+          autocomplete="off"
+          placeholder="Telefone"
+          class="telefone-input"
+        />
+      </div>
+
+      <!-- Etapa 53: Input Celular com #celularInput -->
+      <div class="celular-field">
+        <input
+          #celularInput
+          type="text"
+          [(ngModel)]="celular"
+          autocomplete="off"
+          placeholder="Celular"
+          class="celular-input"
+        />
+      </div>
+
+      <!-- Etapa 54: Input CPF com #cpfInput, maxlength="14", (input)="onCpfInput($event)" -->
+      <div class="cpf-field">
+        <input
+          #cpfInput
+          type="text"
+          [(ngModel)]="cpf"
+          autocomplete="off"
+          inputmode="numeric"
+          maxlength="14"
+          (input)="onCpfInput($event)"
+          placeholder="CPF"
+          class="cpf-input"
+        />
+      </div>
+
+      <!-- Etapa 55: Input Data Nascimento com #dobInput, maxlength="10", (input)="onDateInput($event)" -->
+      <div class="dob-field">
+        <input
+          #dobInput
+          type="text"
+          [(ngModel)]="dataNascimento"
+          autocomplete="off"
+          inputmode="numeric"
+          maxlength="10"
+          (input)="onDateInput($event)"
+          placeholder="Data de Nascimento"
+          class="dob-input"
+        />
+      </div>
+    </div>
+  
+    <!-- Etapa 56: Container de botões -->
+    <div class="buttons-container">
+      <!-- Etapa 57: Botão Cancelar (com ícone SVG) -->
+      <button
+        type="button"
+        (click)="limparNome()"
+        class="cancelar-btn"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+        </svg>
+        Cancelar
+      </button>
+
+      <!-- Etapa 58: Botão Cadastrar (com ícone SVG) -->
+      <button
+        type="button"
+        (click)="cadastrar()"
+        class="cadastrar-btn"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+          <polyline points="17 21 17 13 7 13 7 21"></polyline>
+          <polyline points="7 3 7 8 15 8"></polyline>
+        </svg>
+        {{ contatoEditando ? 'Atualizar' : 'Cadastrar' }}
+      </button>
+    </div>
+  </div>
+</fieldset>
+
+<!-- Etapa 59: Container da tabela -->
+<div class="tabela-container">
+  <!-- Etapa 60: Título "Lista de Cadastros" -->
+  <h2>Lista de Cadastros</h2>
+  
+  <!-- Etapa 61: Tabela com cabeçalhos (Nome, Email, Celular, Telefone, CPF, Data Nasc., Ações) -->
+  <table class="tabela-contatos">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>E-mail</th>
+        <th>Celular</th>
+        <th>Telefone</th>
+        <th>CPF</th>
+        <th>Data Nasc.</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Etapa 62: *ngFor para listar contatos -->
+      <tr *ngFor="let contato of contatos">
+        <!-- Etapa 63: Colunas com dados do contato (usar || '-' para campos opcionais) -->
+        <td>{{ contato.nome }}</td>
+        <td>{{ contato.email }}</td>
+        <td>{{ contato.celular || '-' }}</td>
+        <td>{{ contato.telefone || '-' }}</td>
+        <td>{{ contato.cpf || '-' }}</td>
+        <td>{{ contato.data_nascimento || '-' }}</td>
+        <td class="acoes-cell">
+          <!-- Etapa 64: Botão Editar (ícone lápis) que chama editarContato() -->
+          <button class="btn-icon btn-editar" (click)="editarContato(contato)" title="Editar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+            </svg>
+          </button>
+          <!-- Etapa 65: Botão Excluir (ícone lixeira) que chama excluirContato() -->
+          <button class="btn-icon btn-excluir" (click)="excluirContato(contato)" title="Excluir">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              <line x1="10" y1="11" x2="10" y2="17"></line>
+              <line x1="14" y1="11" x2="14" y2="17"></line>
+            </svg>
+          </button>
+        </td>
+      </tr>
+      <!-- Etapa 66: Linha "Nenhum contato cadastrado" quando lista vazia -->
+      <tr *ngIf="contatos.length === 0">
+        <td colspan="7" class="sem-dados">Nenhum cadastro encontrado</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
